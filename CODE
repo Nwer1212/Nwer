@@ -1,0 +1,84 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+class TriangularPrism
+{
+private:
+	double width;
+	double height;
+	double length;
+	static int Count;
+public:
+	TriangularPrism(double w, double h, double l)
+	{
+		width = w;
+		height = h;
+		length = l;
+		Count++;
+	}
+	TriangularPrism(TriangularPrism& ob)
+	{
+		width = ob.width;
+		height = ob.height;
+		length = ob.length;
+		Count++;
+	}
+	void setWidth(double w)
+	{
+		width = w;
+	}
+	void setHeight(double h)
+	{
+		height = h;
+	}
+	void setLength(double l)
+	{
+		length = l;
+	}
+	double getBaseArea()
+	{
+		return (1 / 2.0) * width * height;
+	}
+	double getBaseVolume()
+	{
+		return getBaseArea() * length;
+	}
+	bool operator==(TriangularPrism& ob)
+	{
+		double v1 = ob.getBaseVolume();
+		if (getBaseVolume() == v1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	friend double operator+(TriangularPrism& ob)
+	{
+		double v1 = ob.getBaseVolume() + ob.getBaseVolume();
+		return v1;
+	}
+	static int getTPCount()
+	{
+		return Count;
+	}
+};
+int TriangularPrism::Count = 0;
+int main()
+{
+	TriangularPrism ob1(14, 6, 30);
+	TriangularPrism ob2(ob1);
+	cout << "Object created:" << TriangularPrism::getTPCount() << endl;
+	bool b = ob1 == ob2;
+	if (b == true)
+		cout << "both objects are equal" << endl;
+	else
+		cout << "both objects are not equal" << endl;
+
+	double B3 = ob1.getBaseVolume() + ob2.getBaseVolume();
+	cout << "Volume is:" << B3 << endl;
+
+	return 0;
+}
